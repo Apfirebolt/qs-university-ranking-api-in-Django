@@ -3,9 +3,10 @@ from rest_framework.permissions import IsAuthenticated
 from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
 from rest_framework import status
-from . serializers import CustomUserSerializer, ListCustomUserSerializer, CustomTokenObtainPairSerializer
+from . serializers import CustomUserSerializer, ListCustomUserSerializer, CustomTokenObtainPairSerializer, \
+    UniversitySerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
-from . models import CustomUser
+from . models import CustomUser, University
 
 
 class CustomTokenObtainPairView(TokenObtainPairView):
@@ -32,6 +33,12 @@ class ChangeSettingsApiView(UpdateAPIView):
 class ListCustomUsersApiView(ListAPIView):
     serializer_class = ListCustomUserSerializer
     queryset = CustomUser.objects.all()
+    permission_classes = [IsAuthenticated]
+
+
+class ListUniversityApiView(ListAPIView):
+    serializer_class = UniversitySerializer
+    queryset = University.objects.all()
     permission_classes = [IsAuthenticated]
 
 
