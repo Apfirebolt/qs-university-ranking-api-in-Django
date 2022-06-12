@@ -1,5 +1,6 @@
 from rest_framework.generics import ListAPIView, CreateAPIView, ListCreateAPIView, UpdateAPIView
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.throttling import UserRateThrottle
 from . pagination import StandardResultsSetPagination
 from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
@@ -41,6 +42,7 @@ class ListUniversityApiView(ListAPIView):
     serializer_class = UniversitySerializer
     permission_classes = [IsAuthenticated]
     pagination_class = StandardResultsSetPagination
+    throttle_classes = [UserRateThrottle]
 
     def get_queryset(self):
         queryset = University.objects.all()

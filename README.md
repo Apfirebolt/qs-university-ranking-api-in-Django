@@ -49,10 +49,11 @@ You can run it just like you run your development server in Django. Just type 'p
 Postgres is used for the database configured in settings.py file insdie the Django app. Though it was not required, for the time being it still uses a Custom User model
 since it is considered one of the best practices of starting out with Django.
 
-## Future Updates/Tasks
+## Features
 
-- Apply rate limit and search filtering
-- Docker deployment
+- Rate limit for authenticated users
+- Basic Search Filtering
+- Pagination
 
 ## Authors
 
