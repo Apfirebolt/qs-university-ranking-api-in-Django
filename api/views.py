@@ -1,7 +1,6 @@
 from rest_framework.generics import ListAPIView, CreateAPIView, ListCreateAPIView, UpdateAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.throttling import UserRateThrottle
-from django_filters import rest_framework as filters
 from . pagination import StandardResultsSetPagination
 from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
@@ -44,25 +43,19 @@ class ListUniversityApiView(ListAPIView):
     permission_classes = [IsAuthenticated]
     pagination_class = StandardResultsSetPagination
     throttle_classes = [UserRateThrottle]
-    # queryset = University.objects.all()
-    # filter_backends = (filters.DjangoFilterBackend,)
-    # filter_fields = {
-    #     'country': ['exact'],
-    #     'name': ['exact']
-    # }
+    queryset = University.objects.all()
+    search_fields = (
+        '^name',
+        '^country'
+    )
+    ordering_fields = (
+        'country',
+        'name',
+        'rank',
+        'ar_score',
+        'ar_rank'
+    )
     
-    def get_queryset(self):
-        queryset = University.objects.all()
-        term = self.request.query_params.get('term')
-        country = self.request.query_params.get('country')
-
-        if country:
-            return queryset.filter(country__icontains=country)
-        if term:
-            return queryset.filter(name__icontains=term)
-
-        return queryset
-
 
 
 
