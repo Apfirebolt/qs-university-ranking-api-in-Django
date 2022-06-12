@@ -16,7 +16,6 @@ class MyUserManager(BaseUserManager):
 class CustomUser(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField("Email", unique=True, max_length=255, blank=True, null=True)
     username = models.CharField("User Name", unique=True, max_length=255, blank=True, null=True)
-    user_bio = models.TextField(blank=True)
     is_active = models.BooleanField('Active', default=True, blank=True, null=True)
     is_staff = models.BooleanField('Staff', default=False)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -36,7 +35,7 @@ class University(models.Model):
   name = models.CharField('University Name', max_length=200)
   rank = models.IntegerField('University Rank')
   ar_score = models.FloatField('University AR Score')
-  ar_rank = models.IntegerField('University AR Rank')
+  ar_rank = models.CharField('University AR Rank', max_length=10)
 
   def __str__(self):
     return str(self.name) + ' - ' + str(self.country)
