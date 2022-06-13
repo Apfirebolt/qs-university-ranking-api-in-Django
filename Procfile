@@ -1,1 +1,2 @@
-web: python manage.py --no-input; qs_world_ranking.wsgi --log-file - --log-level debug
+release: python manage.py migrate
+web: gunicorn qs_world_ranking.wsgi
