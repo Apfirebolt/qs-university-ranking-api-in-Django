@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     'rest_framework_simplejwt',
+    "rest_framework_api_key",
     'django_filters',
 
     'api'
@@ -84,7 +85,7 @@ WSGI_APPLICATION = 'qs_world_ranking.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'university',
+        'NAME': 'qs-university',
         'USER': 'postgres',
         'PASSWORD': 'pass12345',
         'HOST': 'localhost',   # Or an IP Address that your DB is hosted on

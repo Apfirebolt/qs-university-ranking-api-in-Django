@@ -1,10 +1,13 @@
 from rest_framework.generics import ListAPIView, CreateAPIView, ListCreateAPIView, UpdateAPIView
+from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.throttling import UserRateThrottle
 from . pagination import StandardResultsSetPagination
 from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework_api_key.models import APIKey
+from rest_framework_api_key.permissions import HasAPIKey
 from . serializers import CustomUserSerializer, ListCustomUserSerializer, CustomTokenObtainPairSerializer, \
     UniversitySerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
@@ -40,7 +43,7 @@ class ListCustomUsersApiView(ListAPIView):
 
 class ListUniversityApiView(ListAPIView):
     serializer_class = UniversitySerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [HasAPIKey]
     pagination_class = StandardResultsSetPagination
     throttle_classes = [UserRateThrottle]
     queryset = University.objects.all()
@@ -55,6 +58,19 @@ class ListUniversityApiView(ListAPIView):
         'ar_score',
         'ar_rank'
     )
+
+
+class CreateApiKeyView(APIView):
+
+    def post(self, request):
+        """Generate API Key."""
+        username = request.data.get('name')
+        if username:
+            api_key, key = APIKey.objects.create_key(name=username)
+            return Response({'name':str(api_key), 'key': str(key)}, status=status.HTTP_201_CREATED)
+        else:
+            return Response({'detail': 'Invalid data'}, status=status.HTTP_400_BAD_REQUEST)
+        
     
 
 
