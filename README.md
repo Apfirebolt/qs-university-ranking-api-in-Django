@@ -44,6 +44,64 @@ class Command(BaseCommand):
 
 You can run it just like you run your development server in Django. Just type 'python manage.py populate'
 
+API keys are now added for unauthenticated users to access the API through API key generation. The url for api key generation is 'api/create-api-key' and expects name key in request body. It generates the following response.
+```
+{
+    "name": "Gareth",
+    "key": "BjGca2Rg.y3sScExPYRzdVRraXQigvfNNEUe9mgxV"
+}
+```
+
+Subsequently you can use this key to access the university data through the inclusion of 'Api-Key' Authorization in the request header.
+
+```
+{
+    'Authorization': 'Api-Key xBybKmJ8.Z1W2CTLrM0767WF24k8R0DFfBhyxfjYU'
+}
+```
+
+Below is the modified view of the University List API View which allows authenticated users as well as the users who have the API key to access the API data.
+
+```
+from rest_framework_api_key.models import APIKey
+from rest_framework_api_key.permissions import HasAPIKey
+
+...
+
+
+class ListUniversityApiView(ListAPIView):
+    serializer_class = UniversitySerializer
+    permission_classes = [HasAPIKey | IsAuthenticated]
+    pagination_class = StandardResultsSetPagination
+    throttle_classes = [UserRateThrottle]
+    queryset = University.objects.all()
+    search_fields = (
+        '^name',
+        '^country'
+    )
+    ordering_fields = (
+        'country',
+        'name',
+        'rank',
+        'ar_score',
+        'ar_rank'
+    )
+
+class CreateApiKeyView(APIView):
+
+    def post(self, request):
+        """Generate API Key."""
+        username = request.data.get('name')
+        if username:
+            api_key, key = APIKey.objects.create_key(name=username)
+            return Response({'name':str(api_key), 'key': str(key)}, status=status.HTTP_201_CREATED)
+        else:
+            return Response({'detail': 'Invalid data'}, status=status.HTTP_400_BAD_REQUEST)
+
+```
+
+
+
 ## Database
 
 Postgres is used for the database configured in settings.py file insdie the Django app. Though it was not required, for the time being it still uses a Custom User model
@@ -54,6 +112,7 @@ since it is considered one of the best practices of starting out with Django.
 - Rate limit for authenticated users
 - Basic Search Filtering
 - Pagination
+- API key generation using djangorestframework-api-key package
 
 ## Authors
 
