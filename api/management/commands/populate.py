@@ -16,7 +16,12 @@ class Command(BaseCommand):
         for index, row in df.iterrows():
             try:
                 current_university = University(name=row['institution'], country=row['location'], rank=row['Rank'], 
-                                        ar_score=row['ar score'], ar_rank=row['ar rank'], location=row['location code'])
+                                        ar_score=row['ar score'], ar_rank=row['ar rank'], location=row['location code'],
+                                        fsr_score=row['fsr score'], fsr_rank=row['fsr rank'], cpf_score=row['cpf score'],
+                                        cpf_rank=row['cpf rank'], ifr_score=row['ifr score'], ifr_rank=row['ifr rank'],
+                                        isr_score=row['isr score'], isr_rank=row['isr rank'], irn_score=row['irn score'],
+                                        irn_rank=row['irn rank'], ger_score=row['ger score'], ger_rank=row['ger rank'],
+                                        score_scaled=row['score scaled'] )
                 current_university.save()
                 print('Data saved for ', row['institution'])
             except Exception as err:
