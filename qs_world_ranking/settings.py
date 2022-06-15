@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 from pathlib import Path
 from datetime import timedelta
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -82,6 +83,12 @@ WSGI_APPLICATION = 'qs_world_ranking.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
+# Variables for heroku deployment
+database_name = os.environ.get("NAME")
+username = os.environ.get("USERNAME")
+password = os.environ.get("PASSWORD")
+host = os.environ.get("HOST")
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -92,6 +99,17 @@ DATABASES = {
         'PORT': '5432',
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'university',
+#         'USER': 'postgres',
+#         'PASSWORD': 'pass12345',
+#         'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
+#         'PORT': '5432',
+#     }
+# }
 
 
 # Password validation
