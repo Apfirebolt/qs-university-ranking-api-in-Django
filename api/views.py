@@ -43,7 +43,7 @@ class ListCustomUsersApiView(ListAPIView):
 
 class ListUniversityApiView(ListAPIView):
     serializer_class = UniversitySerializer
-    permission_classes = [HasAPIKey]
+    permission_classes = [HasAPIKey | IsAuthenticated]
     pagination_class = StandardResultsSetPagination
     throttle_classes = [UserRateThrottle]
     queryset = University.objects.all()
