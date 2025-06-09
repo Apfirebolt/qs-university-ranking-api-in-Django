@@ -84,33 +84,21 @@ WSGI_APPLICATION = 'qs_world_ranking.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-# Variables for heroku deployment
 database_name = os.environ.get("NAME")
 username = os.environ.get("USERNAME")
 password = os.environ.get("PASSWORD")
 host = os.environ.get("HOST")
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'qs-university',
-        'USER': 'postgres',
-        'PASSWORD': 'pass12345',
-        'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
-        'PORT': '5432',
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": os.getenv("DB_NAME"),
+        "USER": os.getenv("DB_USER"),
+        "PASSWORD": os.getenv("DB_PASSWORD"),
+        "HOST": os.getenv("DB_HOST"),
+        "PORT": os.getenv("DB_PORT"),
     }
 }
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'university',
-#         'USER': 'postgres',
-#         'PASSWORD': 'pass12345',
-#         'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
-#         'PORT': '5432',
-#     }
-# }
 
 
 # Password validation
