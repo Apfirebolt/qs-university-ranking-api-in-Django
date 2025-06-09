@@ -1,0 +1,41 @@
+{% extends 'base.html' %} {% block title %} QS University Ranking - Login {% endblock %} 
+{% block content %}
+<h1 style="text-align: center; margin: 32px 0;">Login to QS University Ranking</h1>
+<form method="post">
+  {% csrf_token %}
+  <div class="grid-container">
+    <div class="grid-x grid-padding-x">
+      <div class="medium-6 cell">
+        <label
+          >Email
+          <input
+            type="email"
+            name="email"
+            placeholder="Enter your email"
+            required
+          />
+        </label>
+      </div>
+    </div>
+    <div class="grid-x grid-padding-x">
+      <div class="medium-6 cell">
+        <label
+          >Password
+          <input
+            type="password"
+            name="password"
+            placeholder="Enter your password"
+            required
+          />
+        </label>
+      </div>
+    </div>
+    <div class="grid-x grid-padding-x">
+      <div class="medium-6 cell">
+        <button type="submit" class="button expanded">Login</button>
+      </div>
+    </div>
+  </div>
+</form>
+
+{% endblock %}

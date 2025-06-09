@@ -33,3 +33,6 @@ yarn-error.log*
 
 # Ignore virtual environment
 venv
+
+# Ignore ruff cache files
+.ruff_cache
