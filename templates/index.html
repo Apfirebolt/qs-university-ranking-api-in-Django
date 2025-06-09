@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,77 +8,99 @@
     <!-- Foundation CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/foundation-sites@6.7.5/dist/css/foundation.min.css">
 </head>
+
 <body>
-<header>
-    <div class="top-bar">
-        <div class="top-bar-left">
-            <ul class="dropdown menu" data-dropdown-menu>
-                <li class="menu-text">QS University Ranking API</li>
-                <li><a href="#">Home</a></li>
-                <li><a href="#">API Docs</a></li>
-                <li><a href="#">About</a></li>
-            </ul>
-        </div>
-        <div class="top-bar-right">
-            <ul class="menu">
-                <li><input type="search" placeholder="Search"></li>
-                <li><button type="button" class="button">Search</button></li>
-            </ul>
-        </div>
-    </div>
-</header>
-<div class="grid-container">
-<main>
-    <div class="grid-container">
-    <h1>QS University Ranking API</h1>
-    <!-- Content goes here -->
-    <p>This page demonstrates how to use the QS University Ranking API.</p>
-    <p>Make sure your API server is running at <code>http://localhost:8000/api/university</code>.</p>
-    <p>Check the console for API response data.</p>
-
-    <!-- Container to show university data -->
-     <div class="university">
-
-     </div>
-</div>
-</main>
-<footer class="footer">
-    <div class="grid-container">
-        <div class="grid-x grid-padding-x align-justify">
-            <div class="cell small-12 medium-shrink">
-                <p>&copy; 2025 QS University Ranking API</p>
+    <header>
+        <div class="top-bar">
+            <div class="top-bar-left">
+                <ul class="dropdown menu" data-dropdown-menu>
+                    <li class="menu-text">QS University Ranking API</li>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">API Docs</a></li>
+                    <li><a href="#">About</a></li>
+                </ul>
             </div>
-            <div class="cell small-12 medium-shrink text-right">
-                <ul class="menu align-right">
-                    <li><a href="#">Contact</a></li>
-                    <li><a href="#">Privacy</a></li>
+            <div class="top-bar-right">
+                <ul class="menu">
+                    <li><input type="search" placeholder="Search"></li>
+                    <li><button type="button" class="button">Search</button></li>
                 </ul>
             </div>
         </div>
-    </div>
-</footer>
+    </header>
+    <div class="grid-container">
+        <main>
+            <div class="grid-container">
+                <h1>QS University Ranking API</h1>
+                <!-- Content goes here -->
+                <p>This page demonstrates how to use the QS University Ranking API.</p>
+                <p>Make sure your API server is running at <code>http://localhost:8000/api/university</code>.</p>
+                <p>Check the console for API response data.</p>
 
-<!-- jQuery -->
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-<!-- Foundation JS -->
-<script src="https://cdn.jsdelivr.net/npm/foundation-sites@6.7.5/dist/js/foundation.min.js"></script>
-<script>
-    $(document).foundation();
-    $(document).ready(function() {
-        // Initialize Foundation
-        $(document).foundation();
+                <div class="grid-x align-middle align-justify" style="margin-bottom: 1rem;">
+                    <div class="cell shrink">
+                        <span id="pageNumber" class="label secondary">Page <span id="currentPageNum">1</span></span>
+                    </div>
+                    <div class="cell shrink">
+                        <div class="button-group">
+                            <button type="button" class="button" id="prevBtn">Previous</button>
+                            <button type="button" class="button" id="nextBtn">Next</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Container to show university data -->
+                <div class="university">
 
-        // make API call to http://localhost:8000/api/university
-        $.ajax({
-            url: 'http://localhost:8000/api/university',
-            method: 'GET',
-            success: function(data) {
-                console.log('API Response:', data.results);
-                // Assuming data.results is an array of university objects
-                let $container = $('.university');
-                $container.empty();
-                data.results.forEach(function(univ) {
-                    let card = `
+                </div>  
+            </div>
+        </main>
+        <footer class="footer">
+            <div class="grid-container">
+                <div class="grid-x grid-padding-x align-justify">
+                    <div class="cell small-12 medium-shrink">
+                        <p>&copy; 2025 QS University Ranking API</p>
+                    </div>
+                    <div class="cell small-12 medium-shrink text-right">
+                        <ul class="menu align-right">
+                            <li><a href="#">Contact</a></li>
+                            <li><a href="#">Privacy</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <!-- jQuery -->
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+        <!-- Foundation JS -->
+        <script src="https://cdn.jsdelivr.net/npm/foundation-sites@6.7.5/dist/js/foundation.min.js"></script>
+        <script>
+            let currentPage = 1;
+            const goToNextPage = () => {
+                // Increment the current page number
+                currentPage++;
+                fetchData(`http://localhost:8000/api/university?page=${currentPage}`);
+            };
+
+            const goToPreviousPage = () => {
+                // Decrement the current page number
+                if (currentPage > 1) {
+                    currentPage--;
+                    fetchData(`http://localhost:8000/api/university?page=${currentPage}`);
+                }
+            };
+
+            const fetchData = (url) => {
+                $.ajax({
+                    url,
+                    method: 'GET',
+                    success: function (data) {
+                        console.log('API Response:', data.results);
+                        // Assuming data.results is an array of university objects
+                        let $container = $('.university');
+                        $container.empty();
+                        data.results.forEach(function (univ) {
+                            let card = `
                         <div class="card" style="margin-bottom: 1rem;">
                             <div class="card-divider">
                                 <strong>${univ.name}</strong> (${univ.country})
@@ -98,15 +121,38 @@
                             </div>
                         </div>
                     `;
-                    $container.append(card);
+                            $container.append(card);
+                        });
+                        // Process and display the data as needed
+                    },
+                    error: function (error) {
+                        console.error('Error fetching data:', error);
+                    }
                 });
-                // Process and display the data as needed
-            },
-            error: function(error) {
-                console.error('Error fetching data:', error);
-            }
-        });
-    });
-</script>
+            };
+
+            $(document).foundation();
+            $(document).ready(function () {
+                // Initialize Foundation
+                $(document).foundation();
+
+                // Set initial page number
+                $('#currentPageNum').text(currentPage);
+
+                // Bind next and previous buttons
+                $('#nextBtn').on('click', function () {
+                    goToNextPage();
+                    $('#currentPageNum').text(currentPage);
+                });
+                $('#prevBtn').on('click', function () {
+                    goToPreviousPage();
+                    $('#currentPageNum').text(currentPage);
+                });
+
+                // make API call to http://localhost:8000/api/university
+                fetchData('http://localhost:8000/api/university');
+            });
+        </script>
 </body>
+
 </html>
