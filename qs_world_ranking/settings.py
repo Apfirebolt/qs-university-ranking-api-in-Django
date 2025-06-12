@@ -101,6 +101,18 @@ DATABASES = {
     }
 }
 
+# Hardcoded Database Configuration for Docker Compose
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.postgresql",
+#         "NAME": "qs_ranking",
+#         "USER": "postgres",
+#         "PASSWORD": "pass123",
+#         "HOST": "db",   # IMPORTANT: Use the service name of your database container
+#         "PORT": "5432",
+#     }
+# }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
@@ -202,7 +214,12 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
 ]
 
-STATIC_URL = '/static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+STATIC_URL = "/static/"
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
+SITE_URL = "http://127.0.0.1:8000"
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
