@@ -107,6 +107,39 @@ class CreateApiKeyView(APIView):
 Postgres is used for the database configured in settings.py file insdie the Django app. Though it was not required, for the time being it still uses a Custom User model
 since it is considered one of the best practices of starting out with Django.
 
+## Docker deployment
+
+Only build images without starting the services
+
+```
+docker-compose build
+```
+
+Run services in detached mode
+
+```
+docker-compose up -d
+```
+
+Start services without re-building the image
+
+```
+docker-compose up
+```
+
+To build images and start all the services
+
+```
+docker-compose up --build
+```
+
+After making changes to Nginx.conf file we can skip re-building the image
+
+```
+docker-compose down
+docker-compose up -d # No need for --build if only nginx.conf changed
+```
+
 ## Features
 
 - Rate limit for authenticated users

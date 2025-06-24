@@ -96,28 +96,28 @@ WSGI_APPLICATION = 'qs_world_ranking.wsgi.application'
 # password = os.environ.get("PASSWORD")
 # host = os.environ.get("HOST")
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": os.getenv("DB_NAME"),
-        "USER": os.getenv("DB_USER"),
-        "PASSWORD": os.getenv("DB_PASSWORD"),
-        "HOST": os.getenv("DB_HOST"),
-        "PORT": os.getenv("DB_PORT"),
-    }
-}
-
-# Hardcoded Database Configuration for Docker Compose
 # DATABASES = {
 #     "default": {
 #         "ENGINE": "django.db.backends.postgresql",
-#         "NAME": "qs_ranking",
-#         "USER": "postgres",
-#         "PASSWORD": "pass123",
-#         "HOST": "db",   # IMPORTANT: Use the service name of your database container
-#         "PORT": "5432",
+#         "NAME": os.getenv("DB_NAME"),
+#         "USER": os.getenv("DB_USER"),
+#         "PASSWORD": os.getenv("DB_PASSWORD"),
+#         "HOST": os.getenv("DB_HOST"),
+#         "PORT": os.getenv("DB_PORT"),
 #     }
 # }
+
+# Hardcoded Database Configuration for Docker Compose
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "qs_ranking",
+        "USER": "postgres",
+        "PASSWORD": "pass123",
+        "HOST": "db",   # IMPORTANT: Use the service name of your database container
+        "PORT": "5432",
+    }
+}
 
 
 # Password validation
