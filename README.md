@@ -137,7 +137,7 @@ After making changes to Nginx.conf file we can skip re-building the image
 
 ```
 docker-compose down
-docker-compose up -d # No need for --build if only nginx.conf changed
+docker-compose up -d
 ```
 
 ## Features
