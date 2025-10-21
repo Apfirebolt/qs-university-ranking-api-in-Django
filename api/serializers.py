@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from . models import CustomUser, University
+from . models import CustomUser, University, Application
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
@@ -57,5 +57,12 @@ class UniversitySerializer(serializers.ModelSerializer):
     
     class Meta:
         model = University
+        fields = '__all__'
+
+
+class ApplicationSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = Application
         fields = '__all__'
 

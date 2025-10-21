@@ -80,6 +80,27 @@ class UserAPIKey(AbstractAPIKey):
         on_delete=models.CASCADE,
         related_name="api_keys",
     )
-  
+    created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+    updated_at = models.DateTimeField(auto_now=True, blank=True, null=True)
+    description = models.TextField('API key description', blank=True, null=True)
 
-  
+
+    class Meta:
+        verbose_name = "User API Key"
+        verbose_name_plural = "User API Keys"
+        ordering = ['-created_at']
+
+
+class Application(models.Model):
+    name = models.CharField('Application Name', max_length=100)
+    description = models.TextField('Application Description', blank=True, null=True)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='applications')
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    submitted_at = models.DateTimeField(blank=True, null=True)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name_plural = "Applications"

@@ -9,9 +9,9 @@ from rest_framework import status
 from rest_framework_api_key.models import APIKey
 from rest_framework_api_key.permissions import HasAPIKey
 from . serializers import CustomUserSerializer, ListCustomUserSerializer, CustomTokenObtainPairSerializer, \
-    UniversitySerializer
+    UniversitySerializer, ApplicationSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
-from . models import CustomUser, University
+from . models import CustomUser, University, Application
 
 
 class CustomTokenObtainPairView(TokenObtainPairView):
@@ -70,6 +70,13 @@ class CreateApiKeyView(APIView):
             return Response({'name':str(api_key), 'key': str(key)}, status=status.HTTP_201_CREATED)
         else:
             return Response({'detail': 'Invalid data'}, status=status.HTTP_400_BAD_REQUEST)
+        
+
+class ListApplicationApiView(ListAPIView):
+    serializer_class = ApplicationSerializer
+    permission_classes = []
+    queryset = Application.objects.all()
+    pagination_class = StandardResultsSetPagination
         
     
 

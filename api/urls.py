@@ -1,5 +1,5 @@
 from django.urls import path, include
-from api.views import CreateCustomUserApiView, CustomTokenObtainPairView, ListUniversityApiView, CreateApiKeyView
+from api.views import CreateCustomUserApiView, CustomTokenObtainPairView, ListUniversityApiView, CreateApiKeyView, ListApplicationApiView
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
@@ -14,4 +14,5 @@ urlpatterns = [
     path('token/verify', TokenVerifyView.as_view(), name='token_verify'),
     path('create-api-key', CreateApiKeyView.as_view(), name='api_key_create'),
     path('university', ListUniversityApiView.as_view(), name='university-list'),
+    path('applications', ListApplicationApiView.as_view(), name='application-list'),
 ]

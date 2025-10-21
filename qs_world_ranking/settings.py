@@ -114,7 +114,7 @@ DATABASES = {
         "NAME": "qs_ranking",
         "USER": "postgres",
         "PASSWORD": "pass123",
-        "HOST": "db",   # IMPORTANT: Use the service name of your database container
+        "HOST": "localhost",
         "PORT": "5432",
     }
 }
